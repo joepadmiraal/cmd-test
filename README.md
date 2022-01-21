@@ -10,7 +10,7 @@ First compile the C code.
 After that you can compile and run the two Go code examples.
 
 ## go-cmd
-Demonstrates blocking behaviour of StartWithStdin() from [go-cmd](https://github.com/go-cmd).
+Demonstrates blocking behaviour of StartWithStdin() from [go-cmd](https://github.com/go-cmd/cmd).
 
     cd gocmd
     go build
