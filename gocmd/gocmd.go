@@ -22,7 +22,7 @@ func NewTestReader() *TestReader {
 }
 
 func main() {
-	testCmd := cmd.NewCmd("c/seg")
+	testCmd := cmd.NewCmd("../c/seg")
 	rt := NewTestReader()
 	statusChan := testCmd.StartWithStdin(rt)
 
