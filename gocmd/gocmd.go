@@ -1,30 +1,23 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"time"
 
 	"github.com/go-cmd/cmd"
 )
 
-//Dummy reader which does nothing
-type TestReader struct {
-}
-
-//Read get's called by go-cmd
-func (rt *TestReader) Read(p []byte) (n int, err error) {
-	return 0, nil
-}
-
-func NewTestReader() *TestReader {
-	rt := TestReader{}
-	return &rt
-}
-
 func main() {
 	testCmd := cmd.NewCmd("../c/seg")
-	rt := NewTestReader()
-	statusChan := testCmd.StartWithStdin(rt)
+	reader, writer := io.Pipe()
+	go func() {
+		_, _ = io.Copy(writer, bytes.NewBufferString("hello from the other side\n"))
+		// close immediately
+		_ = writer.Close()
+	}()
+	statusChan := testCmd.StartWithStdin(reader)
 
 	ticker := time.NewTicker(1 * time.Second)
 
